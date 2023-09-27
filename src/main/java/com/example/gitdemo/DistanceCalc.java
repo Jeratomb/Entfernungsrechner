@@ -20,18 +20,28 @@ public class DistanceCalc {
             {-1,344,-1,-1,179,-1,-1,-1,-1,0}//Stuttgart
     };
 
-    private static int[] getIndex(String str, String end){
-        int[] index = {-1,-1};
-        for(int i = 0; i < staedte.length; i++){
-            if(staedte[i] == str) index[0] = i;
-            if(staedte[i] == end) index[1] = i;
+    public static boolean checkInput(String sr){
+        for(String str : staedte){
+            if(str.equalsIgnoreCase(sr)) return true;
         }
-        return index;
+        return false;
     }
     public static boolean checkDirect(String str, String end){
         int[] index = getIndex(str, end);
-        if(entfernungen[index[0]][index[1]] > -1) return true;
+        if (index[0] != -1 && index[1] != -1) {
+            int dist = entfernungen[index[0]][index[1]];
+            if (dist >= 0) return true;
+        }
         return false;
+    }
+
+    public static int[] getIndex(String str, String end){
+        int[] index = {-1,-1};
+        for(int i = 0; i < staedte.length; i++){
+            if(staedte[i].equalsIgnoreCase(str)) index[0] = i;
+            if(staedte[i].equalsIgnoreCase(end)) index[1] = i;
+        }
+        return index;
     }
     public static int getDist(String str, String end){
         int[] index = getIndex(str, end);
