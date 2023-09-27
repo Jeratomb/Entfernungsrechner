@@ -37,8 +37,15 @@ public class HelloController implements Initializable {
             if (DistanceCalc.checkDirect(s1, s2)) {
                 erg = DistanceCalc.getDist(s1, s2);
                 txtErg.setText(Double.toString(erg));
-            } else txtErg.setText("Keine Direktverbindung möglich");
-        } else lblError.setText("Fehlerhafte Eingabe! Stadt nicht im geplanten Verkehr enthalten!");
+                lblError.setText("");
+            } else{
+                txtErg.setText("Keine Direktverbindung möglich");
+                txtErg.setText("");
+        }
+        } else{
+            lblError.setText("Fehlerhafte Eingabe! Stadt nicht im geplanten Verkehr enthalten!");
+            txtErg.setText("");
+        }
     }
 
 }
