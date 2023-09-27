@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+
 public class HelloController {
     @FXML
     private TextField txtN1;
@@ -18,6 +19,11 @@ public class HelloController {
 
     @FXML
     public void onCalc(ActionEvent actionEvent) {
-
+        double erg = 0;
+        if(DistanceCalc.checkDirect(txtN1.toString(), txtN2.toString())){
+        erg = DistanceCalc.getDist(txtN1.toString(), txtN2.toString());
+        txtErg.setText(Double.toString(erg));
+        }else txtErg.setText("Keine Direktverbindung möglich");
     }
+
 }
