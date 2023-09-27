@@ -1,5 +1,7 @@
 package com.example.gitdemo;
 
+import javafx.scene.control.ChoiceBox;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,20 @@ public class DistanceCalc {
             {-1,344,-1,-1,179,-1,-1,-1,-1,0}//Stuttgart
     };
 
+    public static String[] getStaedte() {
+        return staedte;
+    }
+
+    public static boolean staedteContains(String sr){
+        boolean contains = false;
+        for(String str : staedte){
+            if(str.equalsIgnoreCase(sr)) {
+                contains = true;
+                break;
+            }
+        }
+        return contains;
+    }
     public static boolean checkInput(String sr){
         for(String str : staedte){
             if(str.equalsIgnoreCase(sr)) return true;
@@ -28,7 +44,7 @@ public class DistanceCalc {
     }
     public static boolean checkDirect(String str, String end){
         int[] index = getIndex(str, end);
-        if (index[0] != -1 && index[1] != -1) {
+        if (index[0] != -1 || index[1] != -1) {
             int dist = entfernungen[index[0]][index[1]];
             if (dist >= 0) return true;
         }
@@ -44,9 +60,21 @@ public class DistanceCalc {
         return index;
     }
     public static int getDist(String str, String end){
-        int[] index = getIndex(str, end);
-        int dist = entfernungen[index[0]][index[1]];
-        return dist;
+        if(!checkInput(str) || !checkInput(end)) return -3;
+        if(!checkDirect(str, end)) return -2;
+        if(!staedteContains(str) ||!staedteContains(end)) return -1;
+        else {
+            int[] index = getIndex(str, end);
+            int dist = entfernungen[index[0]][index[1]];
+            return dist;
+        }
     }
+
+    public static String getOutput(ChoiceBox<String> str, ChoiceBox<String> end){
+        String f1 = str.getValue();
+        String f2 = end.getValue();
+        return f1 + " bis " + f2 + " Entfernung: " + getDist(f1, f2) + " km";
+    }
+
 
 }
