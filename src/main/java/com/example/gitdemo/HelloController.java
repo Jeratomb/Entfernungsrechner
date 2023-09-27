@@ -26,10 +26,19 @@ public class HelloController implements Initializable {
     private ChoiceBox<String> chbx1;
     @FXML
     private ChoiceBox<String> chbx2;
+    @FXML
+    private Button btnRef;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lblOutput.setText("Warte auf Benutzereingabe...");
+        refresh();
+    }
+
+    public void refresh(){
+        lblOutput.setText("");
+        DistanceCalc.refreshData();
+
         for (String s : DistanceCalc.getStaedte()) {
             chbx1.getItems().add(s);
             chbx2.getItems().add(s);
@@ -45,6 +54,10 @@ public class HelloController implements Initializable {
 
         if(state >=0) lstHist.getItems().add(DistanceCalc.getOutput(chbx1, chbx2));
 
+    }
+
+    public void onRef(ActionEvent actionEvent) {
+        refresh();
     }
     @FXML
     public void setLblOutput(int value) {
