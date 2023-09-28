@@ -13,21 +13,25 @@ public class HelloController implements Initializable {
     @FXML
     private Button btnCalc;
     @FXML
-    private TextField txtErg;
-    @FXML
     private Label lblOutput;
     @FXML
     private Button btnClear;
     @FXML
     private ListView lstHist;
     @FXML
-    private Label headerLabel;
-    @FXML
     private ChoiceBox<String> chbx1;
     @FXML
     private ChoiceBox<String> chbx2;
     @FXML
-    private Button btnRef;
+    private Label lblOutput1;
+    @FXML
+    private TextField txtVon;
+    @FXML
+    private TextField txtNach;
+    @FXML
+    private TextField txtKm;
+    @FXML
+    private Button btnSetVrb;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,6 +39,7 @@ public class HelloController implements Initializable {
         refresh();
     }
 
+    @FXML
     public void refresh(){
         lblOutput.setText("");
         DistanceCalc.refreshData();
@@ -56,29 +61,27 @@ public class HelloController implements Initializable {
 
     }
 
+    @FXML
     public void onRef(ActionEvent actionEvent) {
         refresh();
     }
-    @FXML
+    @Deprecated
     public void setLblOutput(int value) {
         lblOutput.setStyle("-fx-text-fill: red;");
-        switch (value){
-            case -3:
-                lblOutput.setText("Keine Direktverbindung möglich");
-                break;
-            case -2:
-                lblOutput.setText("Fehlerhafte Eingabe! Stadt nicht im geplanten Verkehr enthalten!");
-                break;
-            case -1:
-                lblOutput.setText("Keine Direktverbindung möglich");
-                break;
-            default:
-                DistanceCalc.getOutput(chbx1,chbx2);
-                break;
+        switch (value) {
+            case -3 -> lblOutput.setText("Keine Direktverbindung möglich");
+            case -2 -> lblOutput.setText("Fehlerhafte Eingabe! Stadt nicht im geplanten Verkehr enthalten!");
+            case -1 -> lblOutput.setText("Keine Direktverbindung möglich");
+            default -> DistanceCalc.getOutput(chbx1, chbx2);
         }
     }
     @FXML
     public void onClearList(ActionEvent actionEvent) {
         lstHist.getItems().clear();
+    }
+
+    @FXML
+    public void onSetVrb(ActionEvent actionEvent) {
+        Data.insertVrb(txtVon.toString(), txtNach.toString(), txtKm.toString());
     }
 }

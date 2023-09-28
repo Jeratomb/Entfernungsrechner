@@ -21,16 +21,6 @@ public class DistanceCalc {
         entfernungen = Data.getEntfernung();
     }
 
-    public static boolean staedteContains(String sr){
-        boolean contains = false;
-        for(String str : staedte){
-            if(str.equalsIgnoreCase(sr)) {
-                contains = true;
-                break;
-            }
-        }
-        return contains;
-    }
     public static boolean checkInput(String sr){
         for(String str : staedte){
             if(str.equalsIgnoreCase(sr)) return true;
@@ -55,9 +45,8 @@ public class DistanceCalc {
         return index;
     }
     public static int getDist(String str, String end){
-        if(!checkInput(str) || !checkInput(end)) return -3;
+        if(!checkInput(str) || !checkInput(end)) return -1;
         if(!checkDirect(str, end)) return -2;
-        if(!staedteContains(str) ||!staedteContains(end)) return -1;
         else {
             int[] index = getIndex(str, end);
             int dist = entfernungen[index[0]][index[1]];

@@ -2,19 +2,18 @@ package com.example.gitdemo;
 
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Scanner;
 
 public class Data {
 
     public static String CsvFilePath = "src/data.csv";
 
     public static String[] getStaedte() {
-        ArrayList<String> staedte = new ArrayList<String>();
+        ArrayList<String> staedte = new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(CsvFilePath));
             String line = bufferedReader.readLine();
@@ -31,28 +30,38 @@ public class Data {
 
 
     public static int[][] getEntfernung() {
-        ArrayList<int[]> entfernung = new ArrayList();
-        int[][] data = new int[0][0];
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(CsvFilePath))) {
-            bufferedReader.readLine();
-            while (bufferedReader.readLine() != null) {
-                String line = bufferedReader.readLine();
+        ArrayList<int[]> entfernung = new ArrayList<>();
+        int x = 0;
+        int[][] data = new int[getStaedte().length][getStaedte().length];
+        try{
+            FileReader fr = new FileReader(CsvFilePath);
+            Scanner sc = new Scanner(fr);
+            sc.nextLine();
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
                 String[] lines = line.split(",");
                 int[] rows = new int[lines.length - 1];
                 for (int i = 1; i < lines.length;i++) {
                     rows[i - 1] = Integer.parseInt(lines[i]);
                 }
                 entfernung.add(rows);
-                data = new int[entfernung.size()][entfernung.size()];
-                for(int i = 0; i < entfernung.size(); i++) {
-                    data[i][0] = entfernung.get(i)[0];
+                for(int i = 0; i < rows.length; i++) {
+                    data[x][i] = entfernung.get(x)[i];
                 }
+                x++;
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return data;
+    }
+
+    public static void insertVrb(String t1, String t2, String k1){
+        int k = Integer.parseInt(k1);
+
+        if(!DistanceCalc.checkInput(t2))
+        {
+
+        }
     }
 }
