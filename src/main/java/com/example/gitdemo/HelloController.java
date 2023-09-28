@@ -22,17 +22,8 @@ public class HelloController implements Initializable {
     private ChoiceBox<String> chbx1;
     @FXML
     private ChoiceBox<String> chbx2;
-    @FXML
-    private Label lblOutput1;
-    @FXML
-    private TextField txtVon;
-    @FXML
-    private TextField txtNach;
-    @FXML
-    private TextField txtKm;
-    @FXML
-    private Button btnSetVrb;
 
+    @Deprecated
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lblOutput.setText("Warte auf Benutzereingabe...");
@@ -44,10 +35,12 @@ public class HelloController implements Initializable {
         lblOutput.setText("");
         DistanceCalc.refreshData();
 
-        for (String s : DistanceCalc.getStaedte()) {
-            chbx1.getItems().add(s);
-            chbx2.getItems().add(s);
-        }
+        if(chbx1.getItems().size() != DistanceCalc.getStaedte().length) {
+            for (String s : DistanceCalc.getStaedte()) {
+                chbx1.getItems().add(s);
+                chbx2.getItems().add(s);
+            }
+        }else chbx1.getItems().clear();
     }
 
     @FXML
@@ -80,8 +73,4 @@ public class HelloController implements Initializable {
         lstHist.getItems().clear();
     }
 
-    @FXML
-    public void onSetVrb(ActionEvent actionEvent) {
-        Data.insertVrb(txtVon.toString(), txtNach.toString(), txtKm.toString());
-    }
 }

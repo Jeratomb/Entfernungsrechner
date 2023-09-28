@@ -45,8 +45,8 @@ public class DistanceCalc {
         return index;
     }
     public static int getDist(String str, String end){
-        if(!checkInput(str) || !checkInput(end)) return -1;
-        if(!checkDirect(str, end)) return -2;
+        if(!checkInput(str) || !checkInput(end)) return -2;
+        if(!checkDirect(str, end)) return -1;
         else {
             int[] index = getIndex(str, end);
             int dist = entfernungen[index[0]][index[1]];

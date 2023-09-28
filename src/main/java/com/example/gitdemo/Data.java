@@ -56,12 +56,4 @@ public class Data {
         return data;
     }
 
-    public static void insertVrb(String t1, String t2, String k1){
-        int k = Integer.parseInt(k1);
-
-        if(!DistanceCalc.checkInput(t2))
-        {
-
-        }
-    }
 }
