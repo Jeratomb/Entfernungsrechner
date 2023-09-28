@@ -10,6 +10,7 @@ public class DistanceCalc {
 
     private static  String[] staedte;
     private static  int[][] entfernungen;
+    private static  int[][] matrix;
 
     public static String[] getStaedte() {
 
@@ -19,6 +20,7 @@ public class DistanceCalc {
     public static void refreshData() {
         staedte = Data.getStaedte();
         entfernungen = Data.getEntfernung();
+        Algorithm(entfernungen);
     }
 
     public static boolean checkInput(String sr){
@@ -60,5 +62,35 @@ public class DistanceCalc {
         return f1 + " bis " + f2 + " Entfernung: " + getDist(f1, f2) + " km";
     }
 
+    public static void Algorithm(int[][] entfernungen){
+        int n = entfernungen.length;
+        matrix = new int[n][n];
+        int MAX_DISTANCE = Integer.MAX_VALUE - 1;
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                if(entfernungen[i][j] == -1) matrix[i][j] = MAX_DISTANCE;
+                else matrix[i][j] = entfernungen[i][j];
+            }
+        }
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (matrix[i][j] < MAX_DISTANCE && matrix[k][j] < MAX_DISTANCE) {
+                        int pSp = matrix[i][k] + matrix[k][j];
+                        if(pSp < matrix[i][j]) matrix[i][j] = pSp;
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < n; i++){
+            for(int k = 0; k < n; k++){
+                if(matrix[i][k] == MAX_DISTANCE) entfernungen[i][k] = -1;
+                else entfernungen[i][k] = matrix[i][k];
+            }
+        }
+    }
 
 }
