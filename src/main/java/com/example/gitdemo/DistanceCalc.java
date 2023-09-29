@@ -77,7 +77,7 @@ public class DistanceCalc {
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (matrix[i][j] < MAX_DISTANCE && matrix[k][j] < MAX_DISTANCE) {
+                    if (matrix[i][k] < MAX_DISTANCE && matrix[k][j] < MAX_DISTANCE) {
                         int pSp = matrix[i][k] + matrix[k][j];
                         if(pSp < matrix[i][j]) matrix[i][j] = pSp;
                     }
