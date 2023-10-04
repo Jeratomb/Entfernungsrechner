@@ -71,5 +71,6 @@
             <Font size="16.0" />
          </font>
       </Button>
+      <Label fx:id="lblTime" layoutX="508.0" layoutY="343.0" prefHeight="27.0" prefWidth="263.0" />
    </children>
 </AnchorPane>

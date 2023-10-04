@@ -23,6 +23,14 @@ public class HelloController implements Initializable {
     private ChoiceBox<String> chbx1;
     @FXML
     private ChoiceBox<String> chbx2;
+    @FXML
+    private Label headerLabel;
+    @FXML
+    private Label lblOutput1;
+    @FXML
+    private Button btnRef;
+    @FXML
+    private Label lblTime;
 
     @Deprecated
     @Override
@@ -47,9 +55,10 @@ public class HelloController implements Initializable {
     public void onCalc(ActionEvent actionEvent) {
         DistanceCalc.Algorithm(Data.getEntfernung());
         int state = DistanceCalc.getDist(chbx1.getValue(), chbx2.getValue());
+        int time = DistanceCalc.getWarteZeit(chbx1.getValue(), chbx2.getValue());
 
         lblOutput.setText("");
-        setLblOutput(state);
+        setOutput(state, time);
 
         if(state >=0) lstHist.getItems().add(DistanceCalc.getOutput(chbx1, chbx2));
 
@@ -60,13 +69,17 @@ public class HelloController implements Initializable {
         refresh();
     }
     @Deprecated
-    public void setLblOutput(int value) {
+    public void setOutput(int value, int time) {
         lblOutput.setStyle("-fx-text-fill: red;");
         switch (value) {
             case -2 -> lblOutput.setText("Fehlerhafte Eingabe! Stadt nicht im geplanten Verkehr enthalten!");
             case -1 -> lblOutput.setText("Keine Direktverbindung möglich");
             default -> DistanceCalc.getOutput(chbx1, chbx2);
         }
+        int h = time / 60;
+        int m = time % 60;
+        lblTime.setText(h + "h "+ m + "m");
+        lblTime.setStyle("-fx-text-fill: #00ff00");
     }
     @FXML
     public void onClearList(ActionEvent actionEvent) {
