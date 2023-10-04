@@ -24,10 +24,6 @@ public class HelloController implements Initializable {
     @FXML
     private ChoiceBox<String> chbx2;
     @FXML
-    private Label headerLabel;
-    @FXML
-    private Label lblOutput1;
-    @FXML
     private Button btnRef;
     @FXML
     private Label lblTime;
