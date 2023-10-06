@@ -27,6 +27,7 @@ public class HelloController implements Initializable {
     private Button btnRef;
     @FXML
     private Label lblTime;
+    private DistanceCalc dist = new DistanceCalc();
 
     @Deprecated
     @Override
@@ -42,22 +43,22 @@ public class HelloController implements Initializable {
         chbx1.getItems().clear();
         chbx2.getItems().clear();
 
-        DistanceCalc.refreshData();
+        dist.refreshData();
 
-        chbx1.getItems().addAll(Arrays.stream(DistanceCalc.getStaedte()).sorted().toList());
-        chbx2.getItems().addAll(Arrays.stream(DistanceCalc.getStaedte()).sorted().toList());
+        chbx1.getItems().addAll(Arrays.stream(dist.getStaedte()).sorted().toList());
+        chbx2.getItems().addAll(Arrays.stream(dist.getStaedte()).sorted().toList());
     }
 
     @FXML
     public void onCalc(ActionEvent actionEvent) {
-        DistanceCalc.Algorithm(Data.getEntfernung());
-        int state = DistanceCalc.getDist(chbx1.getValue(), chbx2.getValue());
-        int time = DistanceCalc.getWarteZeit(chbx1.getValue(), chbx2.getValue());
+        dist.Algorithm(Data.getEntfernung());
+        int state = dist.getDist(chbx1.getValue(), chbx2.getValue());
+        int time = dist.getWarteZeit(chbx1.getValue(), chbx2.getValue());
 
         lblOutput.setText("");
         setOutput(state, time);
 
-        if(state >=0) lstHist.getItems().add(DistanceCalc.getOutput(chbx1, chbx2));
+        if(state >=0) lstHist.getItems().add(dist.getOutput(chbx1, chbx2));
 
     }
 
@@ -71,7 +72,7 @@ public class HelloController implements Initializable {
         switch (value) {
             case -2 -> lblOutput.setText("Fehlerhafte Eingabe! Stadt nicht im geplanten Verkehr enthalten!");
             case -1 -> lblOutput.setText("Keine Direktverbindung möglich");
-            default -> DistanceCalc.getOutput(chbx1, chbx2);
+            default -> dist.getOutput(chbx1, chbx2);
         }
         int h = time / 60;
         int m = time % 60;

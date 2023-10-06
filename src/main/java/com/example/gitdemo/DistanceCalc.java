@@ -8,31 +8,31 @@ import java.util.Arrays;
 
 public class DistanceCalc {
 
-    private static  String[] staedte;
-    private static  int[][] entfernungen;
-    private static  int[][] matrix;
-    private static int[][] commuteTimes;
+    private String[] staedte;
+    private int[][] entfernungen;
+    private int[][] matrix;
+    private  int[][] commuteTimes;
 
-    public static String[] getStaedte() {
+    public String[] getStaedte() {
 
         return staedte;
     }
 
     //
-    public static void refreshData() {
+    public void refreshData() {
         staedte = Data.getStaedte();
         entfernungen = Data.getEntfernung();
         Algorithm(entfernungen);
 
     }
 
-    public static int getWarteZeit(String s1, String s2){
+    public  int getWarteZeit(String s1, String s2){
         calcComTime(s1, s2);
         int[] index = getIndex(s1,s2);
         return commuteTimes[index[0]][index[1]];
     }
     // checking if the passed String is in the array
-    public static boolean checkInput(String sr){
+    public  boolean checkInput(String sr){
         for(String str : staedte){
             if(str.equalsIgnoreCase(sr)) return true;
         }
@@ -40,7 +40,7 @@ public class DistanceCalc {
     }
 
     // checking if the 2 points have an existing direct connection
-    public static boolean checkDirect(String str, String end){
+    public  boolean checkDirect(String str, String end){
         int[] index = getIndex(str, end);
         if (index[0] != -1 || index[1] != -1) {
             int dist = entfernungen[index[0]][index[1]];
@@ -50,7 +50,7 @@ public class DistanceCalc {
     }
 
     //Index in the array of start and end to get Distance
-    public static int[] getIndex(String str, String end){
+    public  int[] getIndex(String str, String end){
         int[] index = {-1,-1};
         for(int i = 0; i < staedte.length; i++){
             if(staedte[i].equalsIgnoreCase(str)) index[0] = i;
@@ -60,7 +60,7 @@ public class DistanceCalc {
     }
 
     //get Distance from A to B
-    public static int getDist(String str, String end){
+    public  int getDist(String str, String end){
         if(!checkInput(str) || !checkInput(end)) return -2;
         if(!checkDirect(str, end)) return -1;
         else {
@@ -71,7 +71,7 @@ public class DistanceCalc {
 
 
     // formatted output
-    public static String getOutput(ChoiceBox<String> str, ChoiceBox<String> end){
+    public  String getOutput(ChoiceBox<String> str, ChoiceBox<String> end){
         String f1 = str.getValue();
         String f2 = end.getValue();
         return f1 + " bis " + f2 + " Entfernung: " + getDist(f1, f2) + " km";
@@ -79,7 +79,7 @@ public class DistanceCalc {
 
 
     // Floyd-Warshall Algorithm to make travel over non-direct stations possible
-    public static void Algorithm(int[][] entfernungen){
+    public  void Algorithm(int[][] entfernungen){
         int n = entfernungen.length;
         matrix = new int[n][n];
 
@@ -114,7 +114,7 @@ public class DistanceCalc {
 
 
     // Calculate CommuteTime with 5 waitTime and 725 velocity
-    public static void calcComTime(String s1, String s2) {
+    public  void calcComTime(String s1, String s2) {
         if (entfernungen == null) return;
         int velocity = 725;
         int waitTime = 5;
@@ -136,7 +136,7 @@ public class DistanceCalc {
         }
     }
 
-    public static int getStations(String s1, String s2) {
+    public  int getStations(String s1, String s2) {
         if (!checkInput(s1) || !checkInput(s2)) return -2;
         if (!checkDirect(s1, s2)) return -1;
 
