@@ -38,6 +38,7 @@ public class HelloController implements Initializable {
     @FXML
     public void refresh(){
         lblOutput.setText("");
+        lblTime.setText("");
         chbx1.getItems().clear();
         chbx2.getItems().clear();
 
@@ -75,7 +76,7 @@ public class HelloController implements Initializable {
         int h = time / 60;
         int m = time % 60;
         lblTime.setText(h + "h "+ m + "m");
-        lblTime.setStyle("-fx-text-fill: #00ff00");
+        lblTime.setStyle("-fx-text-fill: #0f420f");
     }
     @FXML
     public void onClearList(ActionEvent actionEvent) {
